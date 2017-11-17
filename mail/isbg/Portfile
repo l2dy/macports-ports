@@ -1,0 +1,32 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        isbg isbg 1.00
+categories          mail
+platforms           darwin
+maintainers         {l2dy @l2dy} openmaintainer
+license             Permissive
+
+description         isbg scans an IMAP Inbox and runs every entry against SpamAssassin
+
+long_description    ${description}. For any entries that match, the message is \
+                    copied to another folder, and the original marked or deleted.
+
+checksums           rmd160  c998507f24c3e42a6e2bac1328eea5017190ee64 \
+                    sha256  31dc7d4eb11fb07b5d3a895950b8b1bbf1c4641cf1951b0189fd124ceccbba03
+
+depends_run         port:py27-docopt
+
+post-patch {
+    reinplace "s|^#!/usr/bin/env python2$|#!${prefix}/bin/python2.7|" ${worksrcpath}/isbg.py
+}
+
+use_configure       no
+
+build {}
+
+destroot {
+        xinstall -m 755 ${worksrcpath}/isbg.py ${destroot}${prefix}/bin/isbg
+}
