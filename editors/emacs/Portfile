@@ -190,6 +190,8 @@ if {$subport eq "emacs-app" || $subport eq "emacs-app-devel"} {
 
     depends_lib-append     port:lcms2
 
+    patchfiles-append      patch-flicker-prevention.diff
+
     universal_variant   no
 
     destroot {
