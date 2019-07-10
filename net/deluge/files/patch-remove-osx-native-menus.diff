@@ -1,50 +1,27 @@
---- deluge/ui/gtkui/gtkui.py.orig	2017-03-06 01:56:20.000000000 -0800
-+++ deluge/ui/gtkui/gtkui.py	2017-03-10 17:53:51.000000000 -0800
-@@ -217,12 +217,12 @@
-                     return 1
-             SetConsoleCtrlHandler(win_handler)
+--- deluge/ui/gtk3/gtkui.py.orig	2019-06-12 17:49:45.000000000 +0000
++++ deluge/ui/gtk3/gtkui.py	2019-06-15 18:18:50.000000000 +0000
+@@ -155,15 +155,15 @@
  
--        if deluge.common.osx_check() and gtk.gdk.WINDOWING == "quartz":
--            import gtkosx_application
--            self.osxapp = gtkosx_application.gtkosx_application_get()
--            def on_die(*args):
--                reactor.stop()
--            self.osxapp.connect("NSApplicationWillTerminate", on_die)
-+#        if deluge.common.osx_check() and gtk.gdk.WINDOWING == "quartz":
-+#            import gtkosx_application
-+#            self.osxapp = gtkosx_application.gtkosx_application_get()
-+#            def on_die(*args):
-+#                reactor.stop()
-+#            self.osxapp.connect("NSApplicationWillTerminate", on_die)
- 
+             SetConsoleCtrlHandler(on_die, True)
+             log.debug('Win32 "die" handler registered')
+-        elif osx_check() and windowing('quartz'):
+-            try:
+-                import gtkosx_application
+-            except ImportError:
+-                pass
+-            else:
+-                self.osxapp = gtkosx_application.gtkosx_application_get()
+-                self.osxapp.connect('NSApplicationWillTerminate', on_die)
+-                log.debug('OSX quartz "die" handler registered')
++#       elif osx_check() and windowing('quartz'):
++#           try:
++#               import gtkosx_application
++#           except ImportError:
++#               pass
++#           else:
++#               self.osxapp = gtkosx_application.gtkosx_application_get()
++#               self.osxapp.connect('NSApplicationWillTerminate', on_die)
++#               log.debug('OSX quartz "die" handler registered')
  
          # Set process name again to fix gtk issue
-@@ -266,17 +266,17 @@
-         self.statusbar = StatusBar()
-         self.addtorrentdialog = AddTorrentDialog()
- 
--        if deluge.common.osx_check() and gtk.gdk.WINDOWING == "quartz":
--            def nsapp_open_file(osxapp, filename):
--                # Ignore command name which is raised at app launch (python opening main script).
--                if filename == sys.argv[0]:
--                    return True
--                from deluge.ui.gtkui.ipcinterface import process_args
--                process_args([filename])
--            self.osxapp.connect("NSApplicationOpenFile", nsapp_open_file)
--            from menubar_osx import menubar_osx
--            menubar_osx(self, self.osxapp)
--            self.osxapp.ready()
-+#        if deluge.common.osx_check() and gtk.gdk.WINDOWING == "quartz":
-+#            def nsapp_open_file(osxapp, filename):
-+#                # Ignore command name which is raised at app launch (python opening main script).
-+#                if filename == sys.argv[0]:
-+#                    return True
-+#                from deluge.ui.gtkui.ipcinterface import process_args
-+#                process_args([filename])
-+#            self.osxapp.connect("NSApplicationOpenFile", nsapp_open_file)
-+#            from menubar_osx import menubar_osx
-+#            menubar_osx(self, self.osxapp)
-+#            self.osxapp.ready()
- 
-         # Initalize the plugins
-         self.plugins = PluginManager()
+         setproctitle(getproctitle())
