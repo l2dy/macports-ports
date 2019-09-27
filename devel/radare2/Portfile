@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           github 1.0
 
 github.setup        radareorg radare2 3.9.0
-revision            0
+revision            1
 categories          devel
 platforms           darwin
 license             LGPL-3+
@@ -29,7 +29,7 @@ configure.args-append \
                     --with-compiler=clang
 
 build.env-append    HOST_CC=${configure.cc}
-
+build.env-append    "CFLAGS=${configure.cflags}"
 
 variant openssl description {Use OpenSSL library} {
     depends_lib-append \
