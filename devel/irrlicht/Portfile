@@ -5,6 +5,7 @@ PortGroup               xcode 1.0
 
 name                    irrlicht
 version                 1.8.4
+revision                1
 categories              devel
 license                 zlib
 platforms               darwin macosx
@@ -32,6 +33,8 @@ post-extract {
 if {${os.platform} eq "darwin" && ${os.major} != 13 } {
 patchfiles-append       patch-irrlicht-cirrdevice.diff
 }
+
+patchfiles-append       patch-irrlicht-cirrdevice-2.diff
 
 # patch out test to exclude older zlib versions that fails on some mac systems like 10.6
 patchfiles-append       patch-pngpriv-zlib-test.diff

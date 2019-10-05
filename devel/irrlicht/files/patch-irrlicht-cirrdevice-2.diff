@@ -1,0 +1,14 @@
+diff --git source/Irrlicht/MacOSX/CIrrDeviceMacOSX.mm source/Irrlicht/MacOSX/CIrrDeviceMacOSX.mm
+index ad493fc..1a44818 100644
+--- source/Irrlicht/MacOSX/CIrrDeviceMacOSX.mm
++++ source/Irrlicht/MacOSX/CIrrDeviceMacOSX.mm
+@@ -1258,6 +1258,9 @@ void CIrrDeviceMacOSX::postMouseEvent(void *event,irr::SEvent &ievent)
+ 			post = false;
+ 	}
+ 
++	ievent.MouseInput.Shift = ([(NSEvent *)event modifierFlags] & NSShiftKeyMask) != 0;
++	ievent.MouseInput.Control = ([(NSEvent *)event modifierFlags] & NSControlKeyMask) != 0;
++
+ 	if (post)
+ 		postEventFromUser(ievent);
+ 
