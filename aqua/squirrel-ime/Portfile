@@ -1,0 +1,49 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        rime squirrel 0.14.0
+name                squirrel-ime
+categories          aqua
+platforms           darwin
+license             GPL-3
+maintainers         {l2dy @l2dy} openmaintainer
+description         Rime for macOS
+long_description    Rime Input Method for macOS
+homepage            https://rime.im/
+
+fetch.type          git
+
+post-fetch {
+    system -W ${worksrcpath} "git submodule update --init --recursive"
+}
+
+post-patch {
+    reinplace "s/xcodebuild/xcbuild/g" ${worksrcpath}/Makefile
+    reinplace "s/-GXcode/& -DCMAKE_MAKE_PROGRAM=xcbuild/g" ${worksrcpath}/librime/xcode.mk
+}
+
+depends_build       port:cmake \
+                    port:xcbuild
+
+depends_lib         port:boost \
+                    port:gflags \
+                    port:icu \
+                    port:libiconv
+
+patchfiles          patch-Makefile.diff \
+                    patch-librime-xcode.mk.diff
+
+use_configure       no
+use_parallel_build  no
+use_xcode           yes
+
+build.target        deps all
+build.env           DEVELOPER_DIR=${developer_dir}
+
+destroot {
+    set imedir "/Library/Input Methods"
+    xinstall -d "${destroot}${imedir}"
+    copy ${worksrcpath}/build/Release/Poedit.app "${destroot}${imedir}"
+}

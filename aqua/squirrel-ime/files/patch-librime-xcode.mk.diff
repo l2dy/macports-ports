@@ -1,0 +1,18 @@
+diff --git librime/xcode.mk librime/xcode.mk
+index 5897855..044fc14 100644
+--- librime/xcode.mk
++++ librime/xcode.mk
+@@ -18,11 +18,11 @@ release:
+ 
+ release-with-icu:
+ 	cmake . -Bbuild -GXcode \
+-	-DBUILD_STATIC=ON \
++	-DBUILD_STATIC=OFF \
+ 	-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON \
+ 	-DCMAKE_INSTALL_PREFIX="$(RIME_DIST_DIR)" \
+ 	-DBUILD_WITH_ICU=ON \
+-	-DCMAKE_PREFIX_PATH=/usr/local/opt/icu4c
++	-DCMAKE_PREFIX_PATH=/opt/local
+ 	cmake --build build --config Release
+ 
+ debug:
