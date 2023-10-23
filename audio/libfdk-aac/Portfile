@@ -2,13 +2,15 @@
 
 PortSystem          1.0
 PortGroup           compiler_blacklist_versions 1.0
+PortGroup           github 1.0
 
+github.setup        mstorsjo fdk-aac 4de681c193d45b14f87efc30e3e3f02d389387b5
 name                libfdk-aac
-version             2.0.2
+version             2.0.2.1
 categories          audio
 license             Restrictive
 platforms           darwin
-maintainers         osj.us:mopihopi openmaintainer
+maintainers         nomaintainer
 description         Fraunhofer FDK AAC Codec Library
 long_description    Fraunhofer FDK AAC Codec Library, released as part of Android, \
                     from the opencore-amr project.  High-quality encoding and decoding \
@@ -18,12 +20,12 @@ long_description    Fraunhofer FDK AAC Codec Library, released as part of Androi
 compiler.blacklist-append gcc-4.2
 
 homepage            https://sourceforge.net/projects/opencore-amr/
-master_sites        sourceforge:project/opencore-amr/fdk-aac
-distname            fdk-aac-${version}
 
-checksums           rmd160  883bc02a0fbaa72e4e076708a93c631a36770375 \
-                    sha256  c9e8630cf9d433f3cead74906a1520d2223f89bcd3fa9254861017440b8eb22f \
-                    size    2886434
+checksums           rmd160  f587fdd8cf361d140b0d99711baf26c39e14144f \
+                    sha256  192ecaf41ee11a686d2d98bdf9f6a9ff96cb2bd1a3df9be91c6f71b6e57028ae \
+                    size    2518759
+
+use_autoreconf      yes
 
 livecheck.type      regex
 livecheck.url       https://sourceforge.net/projects/opencore-amr/files/fdk-aac/
